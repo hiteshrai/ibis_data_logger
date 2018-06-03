@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|VisualGDB">
+      <Configuration>Debug</Configuration>
+      <Platform>VisualGDB</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|VisualGDB">
+      <Configuration>Release</Configuration>
+      <Platform>VisualGDB</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>15.0</VCProjectVersion>
+    <ProjectGuid>{15F5C45A-5A41-4464-B894-A15930AD98A3}</ProjectGuid>
+    <BSP_ID>com.sysprogs.arm.freescale.kinetis_ksdk</BSP_ID>
+    <BSP_VERSION>1.3.2</BSP_VERSION>
+    <InPlaceBSPSubdir />
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|VisualGDB'">
+    <MCUPropertyListFile>$(ProjectDir)kinetis.props</MCUPropertyListFile>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|VisualGDB'">
+    <MCUPropertyListFile>$(ProjectDir)kinetis.props</MCUPropertyListFile>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|VisualGDB'">
+    <GNUConfigurationType>Debug</GNUConfigurationType>
+    <ToolchainID>com.visualgdb.arm-eabi</ToolchainID>
+    <ToolchainVersion>7.2.0/8.0.1/r3</ToolchainVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|VisualGDB'">
+    <ToolchainID>com.visualgdb.arm-eabi</ToolchainID>
+    <ToolchainVersion>7.2.0/8.0.1/r3</ToolchainVersion>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+  <ItemGroup>
+    <ClCompile Include="LEDBlink.cpp" />
+    <None Include="kinetis.props" />
+    <ClCompile Include="$(BSP_ROOT)\K66F18\StartupFiles\startup.c" />
+    <ClCompile Include="$(BSP_ROOT)\K66F18\StartupFiles\vectors_K66F18.c" />
+    <ClCompile Include="$(BSP_ROOT)\platform\devices\MK66F18\startup\system_MK66F18.c" />
+    <ClInclude Include="$(BSP_ROOT)\platform\CMSIS\Include\arm_common_tables.h" />
+    <ClInclude Include="$(BSP_ROOT)\platform\CMSIS\Include\arm_const_structs.h" />
+    <ClInclude Include="$(BSP_ROOT)\platform\CMSIS\Include\arm_math.h" />
+    <ClInclude Include="$(BSP_ROOT)\platform\CMSIS\Include\core_cm0plus.h" />
+    <ClInclude Include="$(BSP_ROOT)\platform\CMSIS\Include\core_cm4.h" />
+    <ClInclude Include="$(BSP_ROOT)\platform\CMSIS\Include\core_cm7.h" />
+    <ClInclude Include="$(BSP_ROOT)\platform\CMSIS\Include\core_cmFunc.h" />
+    <ClInclude Include="$(BSP_ROOT)\platform\CMSIS\Include\core_cmInstr.h" />
+    <ClInclude Include="$(BSP_ROOT)\platform\CMSIS\Include\core_cmSimd.h" />
+    <ClInclude Include="$(BSP_ROOT)\platform\devices\fsl_device_registers.h" />
+    <ClInclude Include="$(BSP_ROOT)\platform\devices\MK66F18\include\fsl_bitaccess.h" />
+    <ClInclude Include="$(BSP_ROOT)\platform\devices\MK66F18\include\MK66F18.h" />
+    <ClInclude Include="$(BSP_ROOT)\platform\devices\MK66F18\include\MK66F18_extension.h" />
+    <ClInclude Include="$(BSP_ROOT)\platform\devices\MK66F18\include\MK66F18_features.h" />
+    <ClInclude Include="$(BSP_ROOT)\platform\devices\MK66F18\startup\system_MK66F18.h" />
+    <None Include="ibis_data_logger-Debug.vgdbsettings" />
+    <None Include="ibis_data_logger-Release.vgdbsettings" />
+    <None Include="kinetis.xml" />
+  </ItemGroup>
+</Project>

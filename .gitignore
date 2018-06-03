@@ -1,6 +1,8 @@
 # Prerequisites
 *.d
 
+*.orig
+
 # Object files
 *.o
 *.ko
@@ -50,3 +52,22 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+#VisualGDB
+Debug
+Release
+*.opensdf
+*.sdf
+*.suo
+*.old
+VisualGDBCache
+CodeDB
+Debug
+VisualGDBCache
+*.suo
+*.opendb
+Browse.VC.db
+*.ipch
+*.user
+*.log
+*.bak
