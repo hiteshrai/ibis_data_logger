@@ -47,7 +47,7 @@
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
   <ItemGroup>
-    <ClCompile Include="LEDBlink.cpp" />
+    <ClCompile Include="app\main.c" />
     <None Include="kinetis.props" />
     <ClCompile Include="$(BSP_ROOT)\K66F18\StartupFiles\startup.c" />
     <ClCompile Include="$(BSP_ROOT)\K66F18\StartupFiles\vectors_K66F18.c" />

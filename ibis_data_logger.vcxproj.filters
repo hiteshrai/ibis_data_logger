@@ -22,11 +22,17 @@
     <Filter Include="VisualGDB settings">
       <UniqueIdentifier>{f5e9ca71-a9e4-417a-87f0-fb81d7fc4703}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source files\app">
+      <UniqueIdentifier>{48b011da-94af-42df-bd5b-26b707a23d92}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\drivers">
+      <UniqueIdentifier>{6016318a-b981-4f0e-9ace-fa20e278510f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\thirdparty">
+      <UniqueIdentifier>{79715ceb-0818-44ea-b13f-ed42453584d3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="LEDBlink.cpp">
-      <Filter>Source files</Filter>
-    </ClCompile>
     <None Include="kinetis.props">
       <Filter>Source files\Device-specific files</Filter>
     </None>
@@ -93,5 +99,10 @@
     <None Include="kinetis.xml">
       <Filter>VisualGDB settings</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="app\main.c">
+      <Filter>Source files\app</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
