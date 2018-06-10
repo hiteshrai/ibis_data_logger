@@ -39,7 +39,21 @@
     <ToolchainID>com.visualgdb.arm-eabi</ToolchainID>
     <ToolchainVersion>7.2.0/8.0.1/r3</ToolchainVersion>
   </PropertyGroup>
-  <ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|VisualGDB'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>thirdparty/Kinetis-SDK/devices/MK66F18/drivers;thirdparty/Kinetis-SDK/devices/MK66F18/utilities;thirdparty/Kinetis-SDK/middleware/usb_1.0.0/device;thirdparty/Kinetis-SDK/middleware/usb_1.0.0/include;thirdparty/Kinetis-SDK/middleware/usb_1.0.0/osa;thirdparty/Kinetis-SDK/middleware/usb_1.0.0/phy;app;%(ClCompile.AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>DEBUG=1;_DEBUG=1;USB_STACK_BM;CPU_MK66FN2M0VMD18;FRDM_K66F;FREEDOM;__STARTUP_CLEAR_BSS;%(ClCompile.PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalOptions />
+      <CLanguageStandard />
+      <CPPLanguageStandard />
+    </ClCompile>
+    <Link>
+      <LibrarySearchDirectories>;%(Link.LibrarySearchDirectories)</LibrarySearchDirectories>
+      <AdditionalLibraryNames>;%(Link.AdditionalLibraryNames)</AdditionalLibraryNames>
+      <AdditionalLinkerInputs>;%(Link.AdditionalLinkerInputs)</AdditionalLinkerInputs>
+      <LinkerScript />
+      <AdditionalOptions />
+    </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
   </ItemGroup>
@@ -47,9 +61,35 @@
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
   <ItemGroup>
+    <ClCompile Include="app\board.c" />
+    <ClCompile Include="app\clock_config.c" />
     <ClCompile Include="app\main.c" />
     <ClCompile Include="thirdparty\Kinetis-SDK\devices\MK66F18\gcc\startup_MK66F18.S" />
     <ClCompile Include="thirdparty\Kinetis-SDK\devices\MK66F18\system_MK66F18.c" />
+    <ClCompile Include="app\pin_mux.c" />
+    <ClCompile Include="app\usb_device_ch9.c" />
+    <ClCompile Include="app\usb_device_descriptor.c" />
+    <ClCompile Include="app\usb_device_hid.c" />
+    <ClCompile Include="thirdparty\Kinetis-SDK\devices\MK66F18\drivers\fsl_clock.c" />
+    <ClCompile Include="thirdparty\Kinetis-SDK\devices\MK66F18\drivers\fsl_common.c" />
+    <ClCompile Include="thirdparty\Kinetis-SDK\devices\MK66F18\drivers\fsl_lpuart.c" />
+    <ClCompile Include="thirdparty\Kinetis-SDK\devices\MK66F18\drivers\fsl_mpu.c" />
+    <ClCompile Include="thirdparty\Kinetis-SDK\devices\MK66F18\drivers\fsl_sim.c" />
+    <ClCompile Include="thirdparty\Kinetis-SDK\devices\MK66F18\drivers\fsl_uart.c" />
+    <ClCompile Include="thirdparty\Kinetis-SDK\devices\MK66F18\utilities\fsl_debug_console.c" />
+    <ClCompile Include="thirdparty\Kinetis-SDK\middleware\usb_1.0.0\device\usb_device_dci.c" />
+    <ClCompile Include="thirdparty\Kinetis-SDK\middleware\usb_1.0.0\device\usb_device_ehci.c" />
+    <ClCompile Include="thirdparty\Kinetis-SDK\middleware\usb_1.0.0\device\usb_device_khci.c" />
+    <ClCompile Include="thirdparty\Kinetis-SDK\middleware\usb_1.0.0\osa\usb_osa_bm.c" />
+    <ClCompile Include="thirdparty\Kinetis-SDK\middleware\usb_1.0.0\phy\usb_phy.c" />
+    <ClInclude Include="app\board.h" />
+    <ClInclude Include="app\clock_config.h" />
+    <ClInclude Include="app\mouse.h" />
+    <ClInclude Include="app\pin_mux.h" />
+    <ClInclude Include="app\usb_device_ch9.h" />
+    <ClInclude Include="app\usb_device_config.h" />
+    <ClInclude Include="app\usb_device_descriptor.h" />
+    <ClInclude Include="app\usb_device_hid.h" />
     <None Include="kinetis.props" />
     <ClInclude Include="$(BSP_ROOT)\platform\CMSIS\Include\arm_common_tables.h" />
     <ClInclude Include="$(BSP_ROOT)\platform\CMSIS\Include\arm_const_structs.h" />

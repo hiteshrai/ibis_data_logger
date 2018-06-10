@@ -101,5 +101,85 @@
     <ClCompile Include="thirdparty\Kinetis-SDK\devices\MK66F18\gcc\startup_MK66F18.S">
       <Filter>Source files\thirdparty</Filter>
     </ClCompile>
+    <ClCompile Include="app\board.c">
+      <Filter>Source files\app</Filter>
+    </ClCompile>
+    <ClCompile Include="app\clock_config.c">
+      <Filter>Source files\app</Filter>
+    </ClCompile>
+    <ClCompile Include="app\pin_mux.c">
+      <Filter>Source files\app</Filter>
+    </ClCompile>
+    <ClCompile Include="app\usb_device_ch9.c">
+      <Filter>Source files\app</Filter>
+    </ClCompile>
+    <ClCompile Include="app\usb_device_descriptor.c">
+      <Filter>Source files\app</Filter>
+    </ClCompile>
+    <ClCompile Include="app\usb_device_hid.c">
+      <Filter>Source files\app</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\Kinetis-SDK\middleware\usb_1.0.0\device\usb_device_dci.c">
+      <Filter>Source files\thirdparty</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\Kinetis-SDK\middleware\usb_1.0.0\device\usb_device_ehci.c">
+      <Filter>Source files\thirdparty</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\Kinetis-SDK\middleware\usb_1.0.0\device\usb_device_khci.c">
+      <Filter>Source files\thirdparty</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\Kinetis-SDK\middleware\usb_1.0.0\phy\usb_phy.c">
+      <Filter>Source files\thirdparty</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\Kinetis-SDK\middleware\usb_1.0.0\osa\usb_osa_bm.c">
+      <Filter>Source files\thirdparty</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\Kinetis-SDK\devices\MK66F18\drivers\fsl_uart.c">
+      <Filter>Source files\thirdparty</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\Kinetis-SDK\devices\MK66F18\drivers\fsl_lpuart.c">
+      <Filter>Source files\thirdparty</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\Kinetis-SDK\devices\MK66F18\drivers\fsl_common.c">
+      <Filter>Source files\thirdparty</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\Kinetis-SDK\devices\MK66F18\drivers\fsl_mpu.c">
+      <Filter>Source files\thirdparty</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\Kinetis-SDK\devices\MK66F18\drivers\fsl_sim.c">
+      <Filter>Source files\thirdparty</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\Kinetis-SDK\devices\MK66F18\drivers\fsl_clock.c">
+      <Filter>Source files\thirdparty</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\Kinetis-SDK\devices\MK66F18\utilities\fsl_debug_console.c">
+      <Filter>Source files\thirdparty</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="app\board.h">
+      <Filter>Source files\app</Filter>
+    </ClInclude>
+    <ClInclude Include="app\clock_config.h">
+      <Filter>Source files\app</Filter>
+    </ClInclude>
+    <ClInclude Include="app\mouse.h">
+      <Filter>Source files\app</Filter>
+    </ClInclude>
+    <ClInclude Include="app\pin_mux.h">
+      <Filter>Source files\app</Filter>
+    </ClInclude>
+    <ClInclude Include="app\usb_device_ch9.h">
+      <Filter>Source files\app</Filter>
+    </ClInclude>
+    <ClInclude Include="app\usb_device_config.h">
+      <Filter>Source files\app</Filter>
+    </ClInclude>
+    <ClInclude Include="app\usb_device_descriptor.h">
+      <Filter>Source files\app</Filter>
+    </ClInclude>
+    <ClInclude Include="app\usb_device_hid.h">
+      <Filter>Source files\app</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
