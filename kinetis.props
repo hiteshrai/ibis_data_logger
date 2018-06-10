@@ -15,12 +15,12 @@
 	</ItemDefinitionGroup>
 	<ItemDefinitionGroup>
 		<Link>
-			<LinkerScript Condition="'%(Link.LinkerScript)' == ''">C:/Users/jbosley/Documents/Personal/projects/ibis_data_logger/MK66FN2M0xxx18_flash.ld</LinkerScript>
+			<LinkerScript Condition="'%(Link.LinkerScript)' == ''">MK66FN2M0xxx18_flash.ld</LinkerScript>
 			<AdditionalOptions>--specs=nano.specs --specs=nosys.specs %(Link.AdditionalOptions)</AdditionalOptions>
 		</Link>
 	</ItemDefinitionGroup>
 	<PropertyGroup>
-		<DefaultLinkerScript>C:/Users/jbosley/Documents/Personal/projects/ibis_data_logger/MK66FN2M0xxx18_flash.ld</DefaultLinkerScript>
+		<DefaultLinkerScript>MK66FN2M0xxx18_flash.ld</DefaultLinkerScript>
 	</PropertyGroup>
 
 	<ItemDefinitionGroup>
