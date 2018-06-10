@@ -36,15 +36,6 @@
     <None Include="kinetis.props">
       <Filter>Source files\Device-specific files</Filter>
     </None>
-    <ClCompile Include="$(BSP_ROOT)\K66F18\StartupFiles\startup.c">
-      <Filter>Source files\Device-specific files</Filter>
-    </ClCompile>
-    <ClCompile Include="$(BSP_ROOT)\K66F18\StartupFiles\vectors_K66F18.c">
-      <Filter>Source files\Device-specific files</Filter>
-    </ClCompile>
-    <ClCompile Include="$(BSP_ROOT)\platform\devices\MK66F18\startup\system_MK66F18.c">
-      <Filter>Source files\Device-specific files</Filter>
-    </ClCompile>
     <ClInclude Include="$(BSP_ROOT)\platform\CMSIS\Include\arm_common_tables.h">
       <Filter>Header files\Device-specific files</Filter>
     </ClInclude>
@@ -103,6 +94,12 @@
   <ItemGroup>
     <ClCompile Include="app\main.c">
       <Filter>Source files\app</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\Kinetis-SDK\devices\MK66F18\system_MK66F18.c">
+      <Filter>Source files\thirdparty</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\Kinetis-SDK\devices\MK66F18\gcc\startup_MK66F18.S">
+      <Filter>Source files\thirdparty</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

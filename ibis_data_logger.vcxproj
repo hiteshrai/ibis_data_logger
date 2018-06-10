@@ -14,7 +14,7 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{15F5C45A-5A41-4464-B894-A15930AD98A3}</ProjectGuid>
     <BSP_ID>com.visualgdb.bsp.in-place</BSP_ID>
-    <BSP_VERSION>1.3.2</BSP_VERSION>
+    <BSP_VERSION>1.0</BSP_VERSION>
     <InPlaceBSPSubdir>BSP</InPlaceBSPSubdir>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -48,10 +48,9 @@
   </ImportGroup>
   <ItemGroup>
     <ClCompile Include="app\main.c" />
+    <ClCompile Include="thirdparty\Kinetis-SDK\devices\MK66F18\gcc\startup_MK66F18.S" />
+    <ClCompile Include="thirdparty\Kinetis-SDK\devices\MK66F18\system_MK66F18.c" />
     <None Include="kinetis.props" />
-    <ClCompile Include="$(BSP_ROOT)\K66F18\StartupFiles\startup.c" />
-    <ClCompile Include="$(BSP_ROOT)\K66F18\StartupFiles\vectors_K66F18.c" />
-    <ClCompile Include="$(BSP_ROOT)\platform\devices\MK66F18\startup\system_MK66F18.c" />
     <ClInclude Include="$(BSP_ROOT)\platform\CMSIS\Include\arm_common_tables.h" />
     <ClInclude Include="$(BSP_ROOT)\platform\CMSIS\Include\arm_const_structs.h" />
     <ClInclude Include="$(BSP_ROOT)\platform\CMSIS\Include\arm_math.h" />

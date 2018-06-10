@@ -3,7 +3,7 @@
 void Delay()
 {
 	int i;
-	for (i = 0; i < 1000000; i++)
+	for (i = 0; i < 2000000; i++)
 		asm("nop");
 }
 
