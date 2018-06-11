@@ -212,6 +212,8 @@ SECTIONS
     *(.bss*)
     . = ALIGN(512);
     USB_RAM_START = .;
+    *(m_usb_bdt)
+    *(m_usb_global)
     . += USB_RAM_GAP;
     *(COMMON)
     . = ALIGN(4);
@@ -235,17 +237,6 @@ SECTIONS
     . = ALIGN(8);
     . += STACK_SIZE;
   } > m_data_2
-
-  m_usb_bdt USB_RAM_START (NOLOAD) :
-  {
-    *(m_usb_bdt)
-    USB_RAM_BDT_END = .;
-  }
-
-  m_usb_global USB_RAM_BDT_END (NOLOAD) :
-  {
-    *(m_usb_global)
-  }
 
   /* Initializes stack on the end of block */
   __StackTop   = ORIGIN(m_data_2) + LENGTH(m_data_2);

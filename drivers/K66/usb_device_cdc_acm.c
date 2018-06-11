@@ -28,33 +28,11 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __USB_HID_MOUSE_H__
-#define __USB_HID_MOUSE_H__
+#include "usb_device_config.h"
+#include "usb.h"
+#include "usb_device.h"
 
-/*******************************************************************************
- * Definitions
- ******************************************************************************/
+#if USB_DEVICE_CONFIG_CDC_ACM
+#include "usb_device_cdc_acm.h"
 
-#if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)
-#define CONTROLLER_ID kUSB_ControllerEhci0
 #endif
-#if defined(USB_DEVICE_CONFIG_KHCI) && (USB_DEVICE_CONFIG_KHCI > 0U)
-#define CONTROLLER_ID kUSB_ControllerKhci0
-#endif
-
-#define USB_DEVICE_INTERRUPT_PRIORITY (3U)
-
-#define USB_HID_MOUSE_REPORT_LENGTH (0x04U)
-typedef struct _usb_hid_mouse_struct
-{
-    usb_device_handle deviceHandle;
-    uint8_t buffer[USB_HID_MOUSE_REPORT_LENGTH];
-    uint8_t speed;
-    uint8_t attach;
-} usb_hid_mouse_struct_t;
-
-/*******************************************************************************
- * API
- ******************************************************************************/
-
-#endif /* __USB_HID_MOUSE_H__ */

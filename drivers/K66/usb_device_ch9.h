@@ -31,6 +31,9 @@
 #ifndef __USB_DEVICE_CH9_H__
 #define __USB_DEVICE_CH9_H__
 
+/*******************************************************************************
+* Definitions
+******************************************************************************/
 /*!
  * @addtogroup usb_device_ch9
  * @{
@@ -73,6 +76,9 @@ typedef enum _usb_device_control_read_write_sequence
     kUSB_DeviceControlPipeStatusStage,     /*!< status stage */
 } usb_device_control_read_write_sequence_t;
 
+/*******************************************************************************
+* API
+******************************************************************************/
 #if defined(__cplusplus)
 extern "C" {
 #endif

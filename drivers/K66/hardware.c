@@ -27,35 +27,28 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+#include "pin_mux.h"
+#include "board.h"
 
-#ifndef __USB_DEVICE_HID_H__
-#define __USB_DEVICE_HID_H__
 
+
+#include "hardware.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 
-/*! @brief The class code of the HID class */
-#define USB_DEVICE_CONFIG_HID_CLASS_CODE (0x03U)
-
-/*! @brief Request code to get report of HID class. */
-#define USB_DEVICE_HID_REQUEST_GET_REPORT (0x01U)
-#define USB_DEVICE_HID_REQUEST_GET_REPORT_TYPE_INPUT (0x01U)
-#define USB_DEVICE_HID_REQUEST_GET_REPORT_TYPE_OUPUT (0x02U)
-#define USB_DEVICE_HID_REQUEST_GET_REPORT_TYPE_FEATURE (0x03U)
-/*! @brief Request code to get idle of HID class. */
-#define USB_DEVICE_HID_REQUEST_GET_IDLE (0x02U)
-/*! @brief Request code to get protocol of HID class. */
-#define USB_DEVICE_HID_REQUEST_GET_PROTOCOL (0x03U)
-/*! @brief Request code to set report of HID class. */
-#define USB_DEVICE_HID_REQUEST_SET_REPORT (0x09U)
-/*! @brief Request code to set idle of HID class. */
-#define USB_DEVICE_HID_REQUEST_SET_IDLE (0x0AU)
-/*! @brief Request code to set protocol of HID class. */
-#define USB_DEVICE_HID_REQUEST_SET_PROTOCOL (0x0BU)
 
 /*******************************************************************************
- * API
+ * Variables
  ******************************************************************************/
 
-#endif /* __USB_DEVICE_HID_H__ */
+
+/*******************************************************************************
+ * Code
+ ******************************************************************************/
+void hardware_init(void)
+{
+	BOARD_InitPins();
+	BOARD_BootClockRUN();
+	BOARD_InitDebugConsole();
+}

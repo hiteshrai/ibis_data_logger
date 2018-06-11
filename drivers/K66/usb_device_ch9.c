@@ -57,9 +57,8 @@ typedef usb_status_t (*usb_standard_request_callback_t)(usb_device_handle handle
                                                         uint32_t *length);
 
 /*******************************************************************************
- * Prototypes
- ******************************************************************************/
-
+* Prototypes
+******************************************************************************/
 /*!
  * @brief Get the setup packet buffer.
  *
@@ -183,8 +182,8 @@ extern usb_status_t USB_DeviceGetInterface(usb_device_handle handle, uint8_t int
  * The function is used to configure a specified endpoint status, idle or halt.
  *
  * @param handle              The device handle.
- * @param endpointAddress    The endpoint address, the BIT7 is the direction, 0U - USB_OUT, 1U - USB_IN.
- * @param status              The new status of the endpoint, 0U - idle, 1U - halt.
+ * @param endpointAddress    The endpoint address, the BIT7 is the direction, 0 - USB_OUT, 1 - USB_IN.
+ * @param status              The new status of the endpoint, 0 - idle, 1 - halt.
  *
  * @return A USB error code or kStatus_USB_Success.
  */
@@ -198,7 +197,7 @@ extern usb_status_t USB_DevcieConfigureEndpointStatus(usb_device_handle handle,
  * The function is used to configure the device remote wakeup feature, enable or disbale the remote wakeup feature.
  *
  * @param handle              The device handle.
- * @param enable              The new feature value of the device remote wakeup, 0U - disable, 1U - enable.
+ * @param enable              The new feature value of the device remote wakeup, 0 - disable, 1 - enable.
  *
  * @return A USB error code or kStatus_USB_Success.
  */
@@ -212,7 +211,6 @@ static usb_status_t USB_DeviceCh9SetClearFeature(usb_device_handle handle,
                                                  usb_setup_struct_t *setup,
                                                  uint8_t **buffer,
                                                  uint32_t *length);
-
 static usb_status_t USB_DeviceCh9SetAddress(usb_device_handle handle,
                                             usb_setup_struct_t *setup,
                                             uint8_t **buffer,
@@ -255,7 +253,7 @@ static const usb_standard_request_callback_t s_UsbDeviceStandardRequest[] = {
     (usb_standard_request_callback_t)NULL,
     USB_DeviceCh9SetAddress,
     USB_DeviceCh9GetDescriptor,
-    (usb_standard_request_callback_t)NULL,
+    (usb_standard_request_callback_t)NULL, /* USB_DeviceCh9SetDescriptor */
     USB_DeviceCh9GetConfiguration,
     USB_DeviceCh9SetConfiguration,
     USB_DeviceCh9GetInterface,
@@ -275,9 +273,8 @@ static const usb_standard_request_callback_t s_UsbDeviceStandardRequest[] = {
 static uint16_t s_UsbDeviceStandardRx;
 
 /*******************************************************************************
- * Code
- ******************************************************************************/
-
+* Code
+******************************************************************************/
 /*!
  * @brief Handle get status request.
  *
@@ -814,7 +811,6 @@ usb_status_t USB_DeviceControlCallback(usb_device_handle handle,
         }
         /* Receive a setup request */
         usb_setup_struct_t *setup = (usb_setup_struct_t *)(message->buffer);
-
         /* Copy the setup packet to the application buffer */
         deviceSetup->wValue = USB_SHORT_FROM_LITTLE_ENDIAN(setup->wValue);
         deviceSetup->wIndex = USB_SHORT_FROM_LITTLE_ENDIAN(setup->wIndex);
