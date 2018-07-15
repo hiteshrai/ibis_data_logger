@@ -58,6 +58,7 @@
 
 void BOARD_InitHardware(void);
 #include "pin_mux.h"
+#include "usb_cdc.h"
 /*******************************************************************************
 * Definitions
 ******************************************************************************/
@@ -101,13 +102,26 @@ static uint8_t s_currSendBuf[DATA_BUFF_SIZE];
 volatile static uint32_t s_recvSize = 0;
 volatile static uint32_t s_sendSize = 0;
 static uint32_t s_usbBulkMaxPacketSize = FS_CDC_VCOM_BULK_OUT_PACKET_SIZE;
-#if defined(FSL_FEATURE_USB_KHCI_KEEP_ALIVE_ENABLED) && (FSL_FEATURE_USB_KHCI_KEEP_ALIVE_ENABLED > 0U) \
-&& defined(USB_DEVICE_CONFIG_KEEP_ALIVE_MODE) &&                                         \
-    (USB_DEVICE_CONFIG_KEEP_ALIVE_MODE > 0U) && defined(FSL_FEATURE_USB_KHCI_USB_RAM) && \
-    (FSL_FEATURE_USB_KHCI_USB_RAM > 0U)
-volatile static uint8_t s_waitForDataReceive = 0;
-volatile static uint8_t s_comOpen = 0;
+
+
+// Application specific variables
+#define TRANSMIT_BUFFER_SIZE                             1024
+#define RECEIVE_BUFFER_SIZE                              1024
+#define TRANSMIT_BUFFER_MASK                             (TRANSMIT_BUFFER_SIZE - 1)
+#if (TRANSMIT_BUFFER_SIZE & TRANSMIT_BUFFER_MASK)
+	#error "Transmit buffer size must be a power of 2"
 #endif
+#define TRANSMIT_BUFFER_INCREMENT(x)  (x = (x + 1) & TRANSMIT_BUFFER_MASK)
+
+static uint8_t m_transmit_buffer[TRANSMIT_BUFFER_SIZE] = { 0 };
+static uint8_t m_receive_buffer[RECEIVE_BUFFER_SIZE] = { 0 };
+
+static volatile uint32_t m_tx_head = 0;
+static volatile uint32_t m_tx_tail = 0;
+static volatile bool transmit_in_progress = false;
+
+static usb_cdc_receive rx_callback = NULL;
+
 /*******************************************************************************
 * Prototypes
 ******************************************************************************/
@@ -133,6 +147,20 @@ usb_status_t USB_DeviceCdcAcmInterruptIn(usb_device_handle handle,
 	usb_status_t error = kStatus_USB_Error;
 
 	return error;
+}
+
+static bool start_usb_tx(void)
+{
+	uint32_t send_length = 0;
+	// There is something to send. Send it now (up to 64 bytes of it)
+	while((m_tx_tail != m_tx_head) && (send_length < 64))
+	{
+		s_currSendBuf[send_length] = m_transmit_buffer[m_tx_tail];
+		TRANSMIT_BUFFER_INCREMENT(m_tx_tail);
+		send_length++;
+	}
+	
+	return kStatus_USB_Success == USB_DeviceSendRequest(s_cdcVcom.deviceHandle, USB_CDC_VCOM_BULK_IN_ENDPOINT, s_currSendBuf, send_length);
 }
 
 /*!
@@ -165,19 +193,24 @@ usb_status_t USB_DeviceCdcAcmBulkIn(usb_device_handle handle,
 		if ((message->buffer != NULL) || ((message->buffer == NULL) && (message->length == 0)))
 		{
 			/* User: add your own code for send complete event */
-			/* Schedule buffer for next receive event */
-			USB_DeviceRecvRequest(handle, USB_CDC_VCOM_BULK_OUT_ENDPOINT, s_currRecvBuf, s_usbBulkMaxPacketSize);
-#if defined(FSL_FEATURE_USB_KHCI_KEEP_ALIVE_ENABLED) && (FSL_FEATURE_USB_KHCI_KEEP_ALIVE_ENABLED > 0U) && \
-			    defined(USB_DEVICE_CONFIG_KEEP_ALIVE_MODE) && (USB_DEVICE_CONFIG_KEEP_ALIVE_MODE > 0U) &&             \
-			    defined(FSL_FEATURE_USB_KHCI_USB_RAM) && (FSL_FEATURE_USB_KHCI_USB_RAM > 0U)
-			s_waitForDataReceive = 1;
-			USB0->INTEN &= ~USB_INTEN_SOFTOKEN_MASK;
-#endif
+			if (m_tx_tail != m_tx_head)
+			{
+				if (!start_usb_tx())
+				{
+					transmit_in_progress = false;
+				}
+			}
+			else
+			{
+				transmit_in_progress = false;
+			}
 		}
 	}
 	else
 	{
+		transmit_in_progress = false;
 	}
+
 	return error;
 }
 
@@ -200,25 +233,13 @@ usb_status_t USB_DeviceCdcAcmBulkOut(usb_device_handle handle,
 
 	if ((1 == s_cdcVcom.attach) && (1 == s_cdcVcom.startTransactions))
 	{
-		s_recvSize = message->length;
-
-#if defined(FSL_FEATURE_USB_KHCI_KEEP_ALIVE_ENABLED) && (FSL_FEATURE_USB_KHCI_KEEP_ALIVE_ENABLED > 0U) && \
-		    defined(USB_DEVICE_CONFIG_KEEP_ALIVE_MODE) && (USB_DEVICE_CONFIG_KEEP_ALIVE_MODE > 0U) &&             \
-		    defined(FSL_FEATURE_USB_KHCI_USB_RAM) && (FSL_FEATURE_USB_KHCI_USB_RAM > 0U)
-		s_waitForDataReceive = 0;
-		USB0->INTEN |= USB_INTEN_SOFTOKEN_MASK;
-#endif
-		if (!s_recvSize)
+		// Call the callback and immediately set up for the next receive.
+		if(rx_callback)
 		{
-			/* Schedule buffer for next receive event */
-			USB_DeviceRecvRequest(handle, USB_CDC_VCOM_BULK_OUT_ENDPOINT, s_currRecvBuf, s_usbBulkMaxPacketSize);
-#if defined(FSL_FEATURE_USB_KHCI_KEEP_ALIVE_ENABLED) && (FSL_FEATURE_USB_KHCI_KEEP_ALIVE_ENABLED > 0U) && \
-			    defined(USB_DEVICE_CONFIG_KEEP_ALIVE_MODE) && (USB_DEVICE_CONFIG_KEEP_ALIVE_MODE > 0U) &&             \
-			    defined(FSL_FEATURE_USB_KHCI_USB_RAM) && (FSL_FEATURE_USB_KHCI_USB_RAM > 0U)
-			s_waitForDataReceive = 1;
-			USB0->INTEN &= ~USB_INTEN_SOFTOKEN_MASK;
-#endif
+			rx_callback(s_currRecvBuf, message->length);
 		}
+		/* Schedule buffer for next receive event */
+		USB_DeviceRecvRequest(handle, USB_CDC_VCOM_BULK_OUT_ENDPOINT, s_currRecvBuf, s_usbBulkMaxPacketSize);
 	}
 	return error;
 }
@@ -630,12 +651,9 @@ void usb_cdc_task(void)
 		{
 			int32_t i;
 
-			/* Copy Buffer to Send Buff */
-			for (i = 0; i < s_recvSize; i++)
-			{
-				s_currSendBuf[s_sendSize++] = s_currRecvBuf[i];
-			}
-			s_recvSize = 0;
+			// Call receive callback
+			// Re setup for receive
+			
 		}
 
 		if (s_sendSize)
@@ -743,3 +761,45 @@ void usb_cdc_init(void)
 	USB_DeviceRun(s_cdcVcom.deviceHandle);
 }
 
+bool usb_cdc_write(uint8_t * data, uint32_t length)
+{
+	int i;
+	uint32_t available_buffer_size = (m_tx_tail - m_tx_head - 1) & TRANSMIT_BUFFER_MASK;
+	
+	if (available_buffer_size < length)
+	{
+		if (!transmit_in_progress)
+		{
+			// Start a transmit now
+			transmit_in_progress = true;
+			if (!start_usb_tx())
+			{
+				transmit_in_progress = false;
+			}
+		}
+		return false;
+	}
+	
+	for (i = 0; i < length; i++)
+	{
+		m_transmit_buffer[m_tx_head] = data[i];
+		TRANSMIT_BUFFER_INCREMENT(m_tx_head);
+	}
+	
+	if (!transmit_in_progress)
+	{
+		// Start a transmit now
+		transmit_in_progress = true;
+		if (!start_usb_tx())
+		{
+			transmit_in_progress = false;
+		}
+	}
+	
+	return true;
+}
+
+void usb_cdc_set_receive_callback(usb_cdc_receive rx)
+{
+	rx_callback = rx;
+}
