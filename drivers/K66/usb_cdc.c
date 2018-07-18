@@ -50,11 +50,6 @@
 #if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0)
 #include "usb_phy.h"
 #endif
-#if defined(FSL_FEATURE_USB_KHCI_KEEP_ALIVE_ENABLED) && (FSL_FEATURE_USB_KHCI_KEEP_ALIVE_ENABLED > 0U) && \
-    defined(USB_DEVICE_CONFIG_KEEP_ALIVE_MODE) && (USB_DEVICE_CONFIG_KEEP_ALIVE_MODE > 0U) &&             \
-    defined(FSL_FEATURE_USB_KHCI_USB_RAM) && (FSL_FEATURE_USB_KHCI_USB_RAM > 0U)
-#include "fsl_smc.h"
-#endif
 
 void BOARD_InitHardware(void);
 #include "pin_mux.h"
@@ -442,14 +437,6 @@ usb_status_t USB_DeviceProcessClassRequest(usb_device_handle handle,
 				if (1 == s_cdcVcom.attach)
 				{
 					s_cdcVcom.startTransactions = 1;
-#if defined(FSL_FEATURE_USB_KHCI_KEEP_ALIVE_ENABLED) && (FSL_FEATURE_USB_KHCI_KEEP_ALIVE_ENABLED > 0U) && \
-					    defined(USB_DEVICE_CONFIG_KEEP_ALIVE_MODE) && (USB_DEVICE_CONFIG_KEEP_ALIVE_MODE > 0U) &&             \
-					    defined(FSL_FEATURE_USB_KHCI_USB_RAM) && (FSL_FEATURE_USB_KHCI_USB_RAM > 0U)
-					s_waitForDataReceive = 1;
-					USB0->INTEN &= ~USB_INTEN_SOFTOKEN_MASK;
-					s_comOpen = 1;
-					usb_echo("USB_APP_CDC_DTE_ACTIVATED\r\n");
-#endif
 				}
 			}
 			else
@@ -493,13 +480,11 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
 		{
 			USB_DeviceControlPipeInit(s_cdcVcom.deviceHandle);
 			s_cdcVcom.attach = 0;
-#if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0)
 			if (kStatus_USB_Success ==
 			    USB_DeviceGetStatus(s_cdcVcom.deviceHandle, kUSB_DeviceStatusSpeed, &s_cdcVcom.speed))
 			{
 				USB_DeviceSetSpeed(handle, s_cdcVcom.speed);
 			}
-#endif
 		}
 		break;
 	case kUSB_DeviceEventSetConfiguration:
@@ -621,18 +606,11 @@ usb_status_t USB_DevcieConfigureEndpointStatus(usb_device_handle handle, uint8_t
  *
  * @return None.
  */
-#if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)
 void USBHS_IRQHandler(void)
 {
 	USB_DeviceEhciIsrFunction(s_cdcVcom.deviceHandle);
 }
-#endif
-#if defined(USB_DEVICE_CONFIG_KHCI) && (USB_DEVICE_CONFIG_KHCI > 0U)
-void USB0_IRQHandler(void)
-{
-	USB_DeviceKhciIsrFunction(s_cdcVcom.deviceHandle);
-}
-#endif
+
 
 /*!
  * @brief Application task function.
@@ -652,8 +630,7 @@ void usb_cdc_task(void)
 			int32_t i;
 
 			// Call receive callback
-			// Re setup for receive
-			
+			// Re setup for receive	
 		}
 
 		if (s_sendSize)
@@ -668,78 +645,19 @@ void usb_cdc_task(void)
 				/* Failure to send Data Handling code here */
 			}
 		}
-#if defined(FSL_FEATURE_USB_KHCI_KEEP_ALIVE_ENABLED) && (FSL_FEATURE_USB_KHCI_KEEP_ALIVE_ENABLED > 0U) && \
-		    defined(USB_DEVICE_CONFIG_KEEP_ALIVE_MODE) && (USB_DEVICE_CONFIG_KEEP_ALIVE_MODE > 0U) &&             \
-		    defined(FSL_FEATURE_USB_KHCI_USB_RAM) && (FSL_FEATURE_USB_KHCI_USB_RAM > 0U)
-		if ((s_waitForDataReceive))
-		{
-			if (s_comOpen == 1)
-			{
-				/* Wait for all the packets been sent during opening the com port. Otherwise these packets may
-				   * wake up the system.
-				*/
-				usb_echo("Waiting to enter lowpower ...\r\n");
-				for (uint32_t i = 0U; i < 16000000U; ++i)
-				{
-					__ASM("NOP"); /* delay */
-				}
-
-				s_comOpen = 0;
-			}
-			usb_echo("Enter lowpower\r\n");
-			USB0->INTEN &= ~USB_INTEN_TOKDNEEN_MASK;
-			SMC_SetPowerModeVlps(SMC);
-
-			s_waitForDataReceive = 0;
-			USB0->INTEN |= USB_INTEN_TOKDNEEN_MASK;
-			usb_echo("Exit  lowpower\r\n");
-		}
-#endif
 	}
-#if USB_DEVICE_CONFIG_USE_TASK
-	USB_DeviceKhciTaskFunction(s_cdcVcom.deviceHandle);
-#endif
 }
 
 void usb_cdc_init(void)
 {
 	uint8_t irqNo;
-#if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0)
 	uint8_t ehciIrq[] = USBHS_IRQS;
 	irqNo = ehciIrq[CONTROLLER_ID - kUSB_ControllerEhci0];
 
 	CLOCK_EnableUsbhs0Clock(kCLOCK_UsbSrcPll0, CLOCK_GetFreq(kCLOCK_PllFllSelClk));
 	USB_EhciPhyInit(CONTROLLER_ID, BOARD_XTAL0_CLK_HZ);
-#endif
-#if defined(USB_DEVICE_CONFIG_KHCI) && (USB_DEVICE_CONFIG_KHCI > 0)
-	uint8_t khciIrq[] = USB_IRQS;
-	irqNo = khciIrq[CONTROLLER_ID - kUSB_ControllerKhci0];
 
-	SystemCoreClockUpdate();
-
-#if ((defined FSL_FEATURE_USB_KHCI_IRC48M_MODULE_CLOCK_ENABLED) && (FSL_FEATURE_USB_KHCI_IRC48M_MODULE_CLOCK_ENABLED))
-	CLOCK_EnableUsbfs0Clock(kCLOCK_UsbSrcIrc48M, 48000000U);
-#else
-	CLOCK_EnableUsbfs0Clock(kCLOCK_UsbSrcPll0, CLOCK_GetFreq(kCLOCK_PllFllSelClk));
-#endif /* FSL_FEATURE_USB_KHCI_IRC48M_MODULE_CLOCK_ENABLED */
-#endif
-#if (defined(FSL_FEATURE_SOC_MPU_COUNT) && (FSL_FEATURE_SOC_MPU_COUNT > 0U))
 	MPU_Enable(MPU, 0);
-#endif /* FSL_FEATURE_SOC_MPU_COUNT */
-
-	/*
-	 * If the SOC has USB KHCI dedicated RAM, the RAM memory needs to be clear after
-	 * the KHCI clock is enabled. When the demo uses USB EHCI IP, the USB KHCI dedicated
-	 * RAM can not be used and the memory can't be accessed.
-	 */
-#if (defined(FSL_FEATURE_USB_KHCI_USB_RAM) && (FSL_FEATURE_USB_KHCI_USB_RAM > 0U))
-#if (defined(FSL_FEATURE_USB_KHCI_USB_RAM_BASE_ADDRESS) && (FSL_FEATURE_USB_KHCI_USB_RAM_BASE_ADDRESS > 0U))
-	for (int i = 0; i < FSL_FEATURE_USB_KHCI_USB_RAM; i++)
-	{
-		((uint8_t *)FSL_FEATURE_USB_KHCI_USB_RAM_BASE_ADDRESS)[i] = 0x00U;
-	}
-#endif /* FSL_FEATURE_USB_KHCI_USB_RAM_BASE_ADDRESS */
-#endif /* FSL_FEATURE_USB_KHCI_USB_RAM */
 
 	s_cdcVcom.speed = USB_SPEED_FULL;
 	s_cdcVcom.attach = 0;
