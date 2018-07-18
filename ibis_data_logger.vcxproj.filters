@@ -31,6 +31,9 @@
     <Filter Include="Source files\thirdparty">
       <UniqueIdentifier>{79715ceb-0818-44ea-b13f-ed42453584d3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source files\drivers\K66">
+      <UniqueIdentifier>{55d1334b-1fcd-4c0e-8cb6-d6ee10854d83}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="kinetis.props">
@@ -138,60 +141,60 @@
       <Filter>Source files\thirdparty</Filter>
     </ClCompile>
     <ClCompile Include="drivers\K66\board.c">
-      <Filter>Source files</Filter>
+      <Filter>Source files\drivers\K66</Filter>
     </ClCompile>
     <ClCompile Include="drivers\K66\clock_config.c">
-      <Filter>Source files</Filter>
-    </ClCompile>
-    <ClCompile Include="drivers\K66\pin_mux.c">
-      <Filter>Source files</Filter>
-    </ClCompile>
-    <ClCompile Include="drivers\K66\usb_device_cdc_acm.c">
-      <Filter>Source files</Filter>
-    </ClCompile>
-    <ClCompile Include="drivers\K66\usb_device_ch9.c">
-      <Filter>Source files</Filter>
-    </ClCompile>
-    <ClCompile Include="drivers\K66\usb_device_descriptor.c">
-      <Filter>Source files</Filter>
-    </ClCompile>
-    <ClCompile Include="drivers\K66\usb_cdc.c">
-      <Filter>Source files</Filter>
+      <Filter>Source files\drivers\K66</Filter>
     </ClCompile>
     <ClCompile Include="drivers\K66\hardware.c">
-      <Filter>Source files</Filter>
+      <Filter>Source files\drivers\K66</Filter>
+    </ClCompile>
+    <ClCompile Include="drivers\K66\pin_mux.c">
+      <Filter>Source files\drivers\K66</Filter>
+    </ClCompile>
+    <ClCompile Include="drivers\K66\usb_cdc.c">
+      <Filter>Source files\drivers\K66</Filter>
+    </ClCompile>
+    <ClCompile Include="drivers\K66\usb_device_cdc_acm.c">
+      <Filter>Source files\drivers\K66</Filter>
+    </ClCompile>
+    <ClCompile Include="drivers\K66\usb_device_ch9.c">
+      <Filter>Source files\drivers\K66</Filter>
+    </ClCompile>
+    <ClCompile Include="drivers\K66\usb_device_descriptor.c">
+      <Filter>Source files\drivers\K66</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="drivers\K66\board.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="drivers\K66\clock_config.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="drivers\K66\pin_mux.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="drivers\K66\usb_device_cdc_acm.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="drivers\K66\usb_device_ch9.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="drivers\K66\usb_device_config.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="drivers\K66\usb_device_descriptor.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="drivers\K66\virtual_com.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
     <ClInclude Include="drivers\usb_cdc.h">
-      <Filter>Header files</Filter>
+      <Filter>Source files\drivers</Filter>
     </ClInclude>
     <ClInclude Include="drivers\hardware.h">
-      <Filter>Header files</Filter>
+      <Filter>Source files\drivers</Filter>
+    </ClInclude>
+    <ClInclude Include="drivers\K66\board.h">
+      <Filter>Source files\drivers\K66</Filter>
+    </ClInclude>
+    <ClInclude Include="drivers\K66\clock_config.h">
+      <Filter>Source files\drivers\K66</Filter>
+    </ClInclude>
+    <ClInclude Include="drivers\K66\pin_mux.h">
+      <Filter>Source files\drivers\K66</Filter>
+    </ClInclude>
+    <ClInclude Include="drivers\K66\usb_device_cdc_acm.h">
+      <Filter>Source files\drivers\K66</Filter>
+    </ClInclude>
+    <ClInclude Include="drivers\K66\usb_device_ch9.h">
+      <Filter>Source files\drivers\K66</Filter>
+    </ClInclude>
+    <ClInclude Include="drivers\K66\usb_device_config.h">
+      <Filter>Source files\drivers\K66</Filter>
+    </ClInclude>
+    <ClInclude Include="drivers\K66\usb_device_descriptor.h">
+      <Filter>Source files\drivers\K66</Filter>
+    </ClInclude>
+    <ClInclude Include="drivers\K66\virtual_com.h">
+      <Filter>Source files\drivers\K66</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
