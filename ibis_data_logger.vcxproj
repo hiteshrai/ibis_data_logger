@@ -63,6 +63,7 @@
   <ItemGroup>
     <ClCompile Include="app\main.c" />
     <ClCompile Include="drivers\K66\board.c" />
+    <ClCompile Include="drivers\K66\clock.c" />
     <ClCompile Include="drivers\K66\clock_config.c" />
     <ClCompile Include="drivers\K66\hardware.c" />
     <ClCompile Include="drivers\K66\pin_mux.c" />
@@ -70,6 +71,7 @@
     <ClCompile Include="drivers\K66\usb_device_cdc_acm.c" />
     <ClCompile Include="drivers\K66\usb_device_ch9.c" />
     <ClCompile Include="drivers\K66\usb_device_descriptor.c" />
+    <ClCompile Include="thirdparty\Kinetis-SDK\devices\MK66F18\drivers\fsl_lptmr.c" />
     <ClCompile Include="thirdparty\Kinetis-SDK\devices\MK66F18\gcc\startup_MK66F18.S" />
     <ClCompile Include="thirdparty\Kinetis-SDK\devices\MK66F18\system_MK66F18.c" />
     <ClCompile Include="thirdparty\Kinetis-SDK\devices\MK66F18\drivers\fsl_clock.c" />
@@ -84,6 +86,7 @@
     <ClCompile Include="thirdparty\Kinetis-SDK\middleware\usb_1.0.0\device\usb_device_khci.c" />
     <ClCompile Include="thirdparty\Kinetis-SDK\middleware\usb_1.0.0\osa\usb_osa_bm.c" />
     <ClCompile Include="thirdparty\Kinetis-SDK\middleware\usb_1.0.0\phy\usb_phy.c" />
+    <ClInclude Include="drivers\clock.h" />
     <ClInclude Include="drivers\hardware.h" />
     <ClInclude Include="drivers\K66\board.h" />
     <ClInclude Include="drivers\K66\clock_config.h" />

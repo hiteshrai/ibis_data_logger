@@ -164,6 +164,12 @@
     <ClCompile Include="drivers\K66\usb_device_descriptor.c">
       <Filter>Source files\drivers\K66</Filter>
     </ClCompile>
+    <ClCompile Include="drivers\K66\clock.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\Kinetis-SDK\devices\MK66F18\drivers\fsl_lptmr.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="drivers\usb_cdc.h">
@@ -195,6 +201,9 @@
     </ClInclude>
     <ClInclude Include="drivers\K66\virtual_com.h">
       <Filter>Source files\drivers\K66</Filter>
+    </ClInclude>
+    <ClInclude Include="drivers\clock.h">
+      <Filter>Header files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
