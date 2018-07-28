@@ -62,6 +62,7 @@
   </ImportGroup>
   <ItemGroup>
     <ClCompile Include="app\main.c" />
+    <ClCompile Include="app\packet_manager.c" />
     <ClCompile Include="drivers\K66\board.c" />
     <ClCompile Include="drivers\K66\clock.c" />
     <ClCompile Include="drivers\K66\clock_config.c" />
@@ -86,6 +87,7 @@
     <ClCompile Include="thirdparty\Kinetis-SDK\middleware\usb_1.0.0\device\usb_device_khci.c" />
     <ClCompile Include="thirdparty\Kinetis-SDK\middleware\usb_1.0.0\osa\usb_osa_bm.c" />
     <ClCompile Include="thirdparty\Kinetis-SDK\middleware\usb_1.0.0\phy\usb_phy.c" />
+    <ClInclude Include="app\packet_manager.h" />
     <ClInclude Include="drivers\clock.h" />
     <ClInclude Include="drivers\hardware.h" />
     <ClInclude Include="drivers\K66\board.h" />

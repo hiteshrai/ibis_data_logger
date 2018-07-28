@@ -4,6 +4,7 @@
 
 #include "hardware.h"
 #include "usb_cdc.h"
+#include "packet_manager.h"
 #include "clock.h"
 
 /*******************************************************************************
@@ -28,10 +29,11 @@ int main(void)
 	usb_cdc_init();
 	clock_init();
     
-	char * transmit_string = "HELLO HITESH HOW ARE YOU???\r\n";
-	uint32_t transmit_string_length = strlen(transmit_string);
+	char * transmit_payload = "HELLO HITESH HOW ARE YOU???\r\n";
+	uint32_t transmit_payload_length = strlen(transmit_payload);
 	
 	uint32_t last_usb_send_tick = clock_get_tick();
+	uint8_t command = 0x01;
 	
 	while (1)
 	{
@@ -39,7 +41,7 @@ int main(void)
 		
 		if (clock_get_elapsed_time_ms(clock_get_tick(), last_usb_send_tick) >= 1000)
 		{
-			usb_cdc_write((uint8_t *)transmit_string, transmit_string_length);
+			packet_manager_send_packet(command, (uint8_t *)transmit_payload, transmit_payload_length);
 			last_usb_send_tick = clock_get_tick();
 		}
 	}

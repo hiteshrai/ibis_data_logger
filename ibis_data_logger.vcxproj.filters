@@ -170,6 +170,9 @@
     <ClCompile Include="thirdparty\Kinetis-SDK\devices\MK66F18\drivers\fsl_lptmr.c">
       <Filter>Source files</Filter>
     </ClCompile>
+    <ClCompile Include="app\packet_manager.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="drivers\usb_cdc.h">
@@ -203,6 +206,9 @@
       <Filter>Source files\drivers\K66</Filter>
     </ClInclude>
     <ClInclude Include="drivers\clock.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="app\packet_manager.h">
       <Filter>Header files</Filter>
     </ClInclude>
   </ItemGroup>
