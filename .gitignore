@@ -71,3 +71,7 @@ Browse.VC.db
 *.user
 *.log
 *.bak
+/software/ibis_data_receiver/.vs/ibis_data_receiver/v15/Server/sqlite3/*.lock
+/software/ibis_data_receiver/.vs/ibis_data_receiver/v15/Server/sqlite3/*.ide
+/software/ibis_data_receiver/.vs/ibis_data_receiver/v15/Server/sqlite3/*.ide-shm
+/software/ibis_data_receiver/.vs/ibis_data_receiver/v15/Server/sqlite3/*.ide-wal
