@@ -63,15 +63,20 @@
   <ItemGroup>
     <ClCompile Include="app\main.c" />
     <ClCompile Include="app\packet_manager.c" />
+    <ClCompile Include="drivers\K66\analog.c" />
     <ClCompile Include="drivers\K66\board.c" />
     <ClCompile Include="drivers\K66\clock.c" />
     <ClCompile Include="drivers\K66\clock_config.c" />
     <ClCompile Include="drivers\K66\hardware.c" />
-    <ClCompile Include="drivers\K66\pin_mux.c" />
+    <ClCompile Include="drivers\K66\pwm.c" />
+    <ClCompile Include="drivers\K66\spi.c" />
     <ClCompile Include="drivers\K66\usb_cdc.c" />
     <ClCompile Include="drivers\K66\usb_device_cdc_acm.c" />
     <ClCompile Include="drivers\K66\usb_device_ch9.c" />
     <ClCompile Include="drivers\K66\usb_device_descriptor.c" />
+    <ClCompile Include="thirdparty\Kinetis-SDK\devices\MK66F18\drivers\fsl_dspi.c" />
+    <ClCompile Include="thirdparty\Kinetis-SDK\devices\MK66F18\drivers\fsl_ftm.c" />
+    <ClCompile Include="thirdparty\Kinetis-SDK\devices\MK66F18\drivers\fsl_gpio.c" />
     <ClCompile Include="thirdparty\Kinetis-SDK\devices\MK66F18\drivers\fsl_lptmr.c" />
     <ClCompile Include="thirdparty\Kinetis-SDK\devices\MK66F18\gcc\startup_MK66F18.S" />
     <ClCompile Include="thirdparty\Kinetis-SDK\devices\MK66F18\system_MK66F18.c" />
@@ -88,11 +93,14 @@
     <ClCompile Include="thirdparty\Kinetis-SDK\middleware\usb_1.0.0\osa\usb_osa_bm.c" />
     <ClCompile Include="thirdparty\Kinetis-SDK\middleware\usb_1.0.0\phy\usb_phy.c" />
     <ClInclude Include="app\packet_manager.h" />
+    <ClInclude Include="drivers\analog.h" />
     <ClInclude Include="drivers\clock.h" />
     <ClInclude Include="drivers\hardware.h" />
     <ClInclude Include="drivers\K66\board.h" />
     <ClInclude Include="drivers\K66\clock_config.h" />
-    <ClInclude Include="drivers\K66\pin_mux.h" />
+    <ClInclude Include="drivers\K66\custom_board.h" />
+    <ClInclude Include="drivers\K66\pwm.h" />
+    <ClInclude Include="drivers\K66\spi.h" />
     <ClInclude Include="drivers\K66\usb_device_cdc_acm.h" />
     <ClInclude Include="drivers\K66\usb_device_ch9.h" />
     <ClInclude Include="drivers\K66\usb_device_config.h" />

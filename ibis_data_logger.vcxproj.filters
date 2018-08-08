@@ -149,9 +149,6 @@
     <ClCompile Include="drivers\K66\hardware.c">
       <Filter>Source files\drivers\K66</Filter>
     </ClCompile>
-    <ClCompile Include="drivers\K66\pin_mux.c">
-      <Filter>Source files\drivers\K66</Filter>
-    </ClCompile>
     <ClCompile Include="drivers\K66\usb_cdc.c">
       <Filter>Source files\drivers\K66</Filter>
     </ClCompile>
@@ -173,6 +170,24 @@
     <ClCompile Include="app\packet_manager.c">
       <Filter>Source files</Filter>
     </ClCompile>
+    <ClCompile Include="drivers\K66\spi.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="drivers\K66\analog.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\Kinetis-SDK\devices\MK66F18\drivers\fsl_dspi.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\Kinetis-SDK\devices\MK66F18\drivers\fsl_gpio.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="drivers\K66\pwm.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\Kinetis-SDK\devices\MK66F18\drivers\fsl_ftm.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="drivers\usb_cdc.h">
@@ -185,9 +200,6 @@
       <Filter>Source files\drivers\K66</Filter>
     </ClInclude>
     <ClInclude Include="drivers\K66\clock_config.h">
-      <Filter>Source files\drivers\K66</Filter>
-    </ClInclude>
-    <ClInclude Include="drivers\K66\pin_mux.h">
       <Filter>Source files\drivers\K66</Filter>
     </ClInclude>
     <ClInclude Include="drivers\K66\usb_device_cdc_acm.h">
@@ -209,6 +221,18 @@
       <Filter>Header files</Filter>
     </ClInclude>
     <ClInclude Include="app\packet_manager.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="drivers\K66\spi.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="drivers\analog.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="drivers\K66\pwm.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="drivers\K66\custom_board.h">
       <Filter>Header files</Filter>
     </ClInclude>
   </ItemGroup>

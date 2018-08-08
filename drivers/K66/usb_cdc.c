@@ -52,7 +52,6 @@
 #endif
 
 void BOARD_InitHardware(void);
-#include "pin_mux.h"
 #include "usb_cdc.h"
 /*******************************************************************************
 * Definitions
