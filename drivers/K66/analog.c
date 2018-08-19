@@ -48,15 +48,6 @@ void ANALOG_READY_IRQ_HANDLER(void)
 	}
 }
 
-static void setup_pga(void)
-{
-	spi_init(kDSPI_Pcs0);
-	uint8_t mux_data[]  = { PGA_WRITE_COMMAND | PGA_REG_MUX,  PGA_REG_MUX_INIT };
-	uint8_t gain_data[] = { PGA_WRITE_COMMAND | PGA_REG_GAIN, PGA_REG_GAIN_UNITY };
-	spi_transaction(mux_data, NULL, sizeof(mux_data), kDSPI_MasterPcs0);
-	spi_transaction(gain_data, NULL, sizeof(gain_data), kDSPI_MasterPcs0);
-	spi_deinit();
-}
 
 static void setup_rdy_pin(void)
 {
@@ -71,7 +62,17 @@ static void setup_rdy_pin(void)
 	GPIO_PinInit(ANALOG_GPIO, ANALOG_READY_PIN, &ready_pin_config);
 }
 
-void analog_init(void)
+static void setup_pga(void)
+{
+	spi_init(kDSPI_Pcs0);
+	uint8_t mux_data[] = { PGA_WRITE_COMMAND | PGA_REG_MUX, PGA_REG_MUX_INIT };
+	uint8_t gain_data[] = { PGA_WRITE_COMMAND | PGA_REG_GAIN, PGA_REG_GAIN_UNITY };
+	spi_transaction(mux_data, NULL, sizeof(mux_data), kDSPI_MasterPcs0);
+	spi_transaction(gain_data, NULL, sizeof(gain_data), kDSPI_MasterPcs0);
+	spi_deinit();
+}
+
+static void analog_pin_init(void)
 {
 	/* Configure MCLK pin to use as PWM and READY pin as an GPIO */
 	CLOCK_EnableClock(ANALOG_CLOCK);
@@ -94,16 +95,25 @@ void analog_init(void)
 	};
 	
 	GPIO_PinInit(ANALOG_SPI_GPIO, ANALOG_SPI_CS_ADC, &adc_cs_config);
-	
+}
+
+void analog_init(void)
+{
+	analog_pin_init();
 	setup_pga();
 }
 
 void analog_start(uint32_t freq, analog_ready_callback_t cb)
 {
+	// Make sure Chip select for 2512-24 ADC chip is used for SPI and not as normal GPIO.
 	PORT_SetPinMux(ANALOG_SPI_PORT, ANALOG_SPI_CS_ADC, kPORT_MuxAlt2);
 
+	// Setup Ready pin for 2512-24 ADC Chip.
     setup_rdy_pin();
+	
+	// Initialize MCLK pin for 2512-24 ADC chip.
 	pwm_init(freq);	
+	
 	spi_init(kDSPI_Pcs1);
 	
 	analog_ready_callback = cb;
